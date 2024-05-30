@@ -4,6 +4,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width:100%;
+    position: relative;
+
 }
 
 .navbar-brand {
@@ -32,5 +35,5 @@
 }
 
 .nav-link:hover {
-    color: #ff9900; /* Change the color on hover */
+    color: rgba(185, 184, 176, 0); /* Change the color on hover */
 }
