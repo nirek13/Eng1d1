@@ -17,25 +17,18 @@ const EyeFollow = () => {
         };
     }, []);
 
-    const calculatePosition = (containerElement, targetElement) => {
-        const containerRect = containerElement.getBoundingClientRect();
-        const targetRect = targetElement.getBoundingClientRect();
-        console.log("containerRect: ", containerRect);
-        console.log("targetRect: ", targetRect);
-        const centerX = containerRect.left + containerRect.width / 2;
-        const centerY = containerRect.top + containerRect.height / 2;
-        const angle = Math.atan2(targetRect.top + targetRect.height / 2 - centerY, targetRect.left + targetRect.width / 2 - centerX);
-        const maxDistance = Math.min(containerRect.width / 4, containerRect.height / 4);
+    const calculatePosition = (element) => {
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 1;
+        const angle = Math.atan2(mousePosition.y - centerY, mousePosition.x - centerX);
+        const maxDistance = rect.width / 8;
 
         const x = maxDistance * Math.cos(angle);
         const y = maxDistance * Math.sin(angle);
 
-        console.log("x: ", x);
-        console.log("y: ", y);
-
         return { x, y };
     };
-
 
     return (
         <div className="eye-container">
@@ -49,7 +42,7 @@ const EyeFollow = () => {
                             style={
                                 corneaRefs[i].current
                                     ? {
-                                        transform: `translate(${calculatePosition(eyeRefs[i].current, corneaRefs[i].current).x}px, ${calculatePosition(eyeRefs[i].current, corneaRefs[i].current).y}px)`,
+                                        transform: `translate(${calculatePosition(corneaRefs[i].current).x}px, ${calculatePosition(corneaRefs[i].current).y}px)`,
                                     }
                                     : {}
                             }
@@ -59,7 +52,7 @@ const EyeFollow = () => {
                                 style={
                                     eyeRef.current
                                         ? {
-                                            transform: `translate(${calculatePosition(corneaRefs[i].current, eyeRef.current).x}px, ${calculatePosition(corneaRefs[i].current, eyeRef.current).y}px)`,
+                                            transform: `translate(${calculatePosition(eyeRef.current).x}px, ${calculatePosition(eyeRef.current).y}px)`,
                                         }
                                         : {}
                                 }
